@@ -41,13 +41,13 @@ public class AudioTrackActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-//                Log.d(LOG_TAG, "btnSend clicked");
-//                SendAudio();
-                playFromRaw();
+                Log.d(LOG_TAG, "btnSend clicked");
+                SendAudio();
+//                playFromRaw();
             }
         });
 
-        /*  using stream mode.
+        //using stream mode.
 
         btnSend.setOnClickListener(new OnClickListener() {
 
@@ -67,8 +67,6 @@ public class AudioTrackActivity extends Activity {
                 RecvAudio();
             }
         });
-        */
-
     }
 
     static final String LOG_TAG = "AudioTrackActivity";
@@ -77,7 +75,7 @@ public class AudioTrackActivity extends Activity {
     static final int AUDIO_PORT = 2048;
     static final int SAMPLE_INTERVAL = 20; // milliseconds
     static final int SAMPLE_SIZE = 2; // bytes per sample
-    static final int BUF_SIZE = SAMPLE_RATE;//AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT)*4;
+    static final int BUF_SIZE = AudioTrack.getMinBufferSize(SAMPLE_RATE, AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioFormat.ENCODING_PCM_16BIT);
 
     public void RecvAudio() {
         Thread thrd = new Thread(new Runnable() {
@@ -178,15 +176,6 @@ public class AudioTrackActivity extends Activity {
             byte_count = audio_stream.read(buffer, 0, file_size);
             track.write(buffer, 0, byte_count);
             track.play();
-//
-//            byte_count = audio_stream.read(buffer, 0, BUF_SIZE);
-//            while (byte_count > -1) {
-//                Log.i("Sophat", "write stream");
-//
-//                track.write(buffer, 0, byte_count);
-//                byte_count = audio_stream.read(buffer, 0, BUF_SIZE);
-//            }
-            
         } catch (FileNotFoundException e) {
 
         } catch (IOException e) {
